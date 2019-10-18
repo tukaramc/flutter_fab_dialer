@@ -1,29 +1,31 @@
 part of flutter_fab_dialer;
-
+typedef void ButtonCallback();
 class FabDialer extends StatefulWidget {
   // AnimationStyle is an optional parameter to avoid breaking changes
-  const FabDialer(this._fabMiniMenuItemList, this._fabColor, this._fabIcon,
+   FabDialer(this._fabMiniMenuItemList, this._fabColor, this._fabIcon,this.callback,
       [this._fabAnimationStyle = AnimationStyle.defaultAnimation]);
 
   final List<FabMiniMenuItem> _fabMiniMenuItemList;
   final Color _fabColor;
   final Icon _fabIcon;
+  ButtonCallback callback;
   final AnimationStyle _fabAnimationStyle;
 
   @override
   FabDialerState createState() => new FabDialerState(
-      _fabMiniMenuItemList, _fabColor, _fabIcon, _fabAnimationStyle);
+      _fabMiniMenuItemList, _fabColor, _fabIcon, callback, _fabAnimationStyle);
 }
 
 class FabDialerState extends State<FabDialer> with TickerProviderStateMixin {
-  FabDialerState(this._fabMiniMenuItemList, this._fabColor, this._fabIcon,
+  FabDialerState(this._fabMiniMenuItemList, this._fabColor, this._fabIcon, this.callback,
       this._fabAnimationStyle);
-
+  ButtonCallback callback;
   int _angle = 90;
   bool _isRotated = true;
   final List<FabMiniMenuItem> _fabMiniMenuItemList;
   final Color _fabColor;
   final Icon _fabIcon;
+
   final AnimationStyle _fabAnimationStyle;
   List<FabMenuMiniItemWidget> _fabMenuItems;
 
@@ -85,7 +87,7 @@ class FabDialerState extends State<FabDialer> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new Container(
-        margin: new EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+        margin: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -102,7 +104,10 @@ class FabDialerState extends State<FabDialer> with TickerProviderStateMixin {
                       child: _fabIcon,
                     ),
                     backgroundColor: _fabColor,
-                    onPressed: _rotate)
+                    onPressed: (){
+                      widget.callback();
+                      _rotate();
+                    })
               ],
             ),
           ],
