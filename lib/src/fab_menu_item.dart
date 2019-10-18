@@ -8,7 +8,7 @@ class FabMiniMenuItem {
   double elevation;
   String text;
   Icon icon;
-  ImageProvider image;
+  Image image;
   Color fabColor;
   Color chipColor;
   String tooltip;
@@ -17,8 +17,7 @@ class FabMiniMenuItem {
   OnFabMiniMenuItemPressed onPressed;
   bool hideOnClick;
 
-  FabMiniMenuItem.withText(
-      this.icon,
+  FabMiniMenuItem.withText(this.icon,
       this.fabColor,
       this.elevation,
       this.tooltip,
@@ -28,8 +27,7 @@ class FabMiniMenuItem {
       this.textColor,
       this.hideOnClick);
 
-  FabMiniMenuItem.withTextWithImage(
-      this.image,
+  FabMiniMenuItem.withTextWithImage(this.image,
       this.elevation,
       this.tooltip,
       this.onPressed,
@@ -58,27 +56,26 @@ class FabMiniMenuItem {
 }
 
 class FabMenuMiniItemWidget extends StatelessWidget {
-  const FabMenuMiniItemWidget(
-      {Key key,
-      this.elevation,
-      this.text,
-      this.icon,
-      this.image,
-      this.fabColor,
-      this.chipColor,
-      this.textColor,
-      this.tooltip,
-      this.index,
-      this.controller,
-      this.onPressed,
-      this.hideWidget,
-      this.animationStyle,
-      this.itemCount})
+  const FabMenuMiniItemWidget({Key key,
+    this.elevation,
+    this.text,
+    this.icon,
+    this.image,
+    this.fabColor,
+    this.chipColor,
+    this.textColor,
+    this.tooltip,
+    this.index,
+    this.controller,
+    this.onPressed,
+    this.hideWidget,
+    this.animationStyle,
+    this.itemCount})
       : super(key: key);
   final double elevation;
   final String text;
   final Icon icon;
-  final ImageProvider image;
+  final Image image;
   final Color fabColor;
   final Color chipColor;
   final String tooltip;
@@ -91,7 +88,10 @@ class FabMenuMiniItemWidget extends StatelessWidget {
   final AnimationStyle animationStyle;
 
   Widget _buildAnimation(BuildContext context, Widget child) {
-    final double deviceHeight = MediaQuery.of(context).size.height;
+    final double deviceHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     switch (animationStyle) {
       case AnimationStyle.fadeIn: //fadeIn
@@ -102,15 +102,15 @@ class FabMenuMiniItemWidget extends StatelessWidget {
               end: 1.0,
             )
                 .animate(
-                  new CurvedAnimation(
-                    parent: controller,
-                    curve: new Interval(
-                      0.100,
-                      0.900,
-                      curve: Curves.easeIn,
-                    ),
-                  ),
-                )
+              new CurvedAnimation(
+                parent: controller,
+                curve: new Interval(
+                  0.100,
+                  0.900,
+                  curve: Curves.easeIn,
+                ),
+              ),
+            )
                 .value,
             child: new Container(
               child: new Row(
@@ -133,15 +133,15 @@ class FabMenuMiniItemWidget extends StatelessWidget {
             begin: EdgeInsets.only(top: deviceHeight / itemCount / 3),
           )
               .animate(
-                new CurvedAnimation(
-                  parent: controller,
-                  curve: new Interval(
-                    0.100,
-                    0.600,
-                    curve: Curves.fastOutSlowIn,
-                  ),
-                ),
-              )
+            new CurvedAnimation(
+              parent: controller,
+              curve: new Interval(
+                0.100,
+                0.600,
+                curve: Curves.fastOutSlowIn,
+              ),
+            ),
+          )
               .value,
           child: new Opacity(
             opacity: new Tween<double>(
@@ -149,15 +149,15 @@ class FabMenuMiniItemWidget extends StatelessWidget {
               end: 1.0,
             )
                 .animate(
-                  new CurvedAnimation(
-                    parent: controller,
-                    curve: new Interval(
-                      0.100,
-                      0.600,
-                      curve: Curves.ease,
-                    ),
-                  ),
-                )
+              new CurvedAnimation(
+                parent: controller,
+                curve: new Interval(
+                  0.100,
+                  0.600,
+                  curve: Curves.ease,
+                ),
+              ),
+            )
                 .value,
             child: new Container(
               child: new Row(
@@ -206,52 +206,53 @@ class FabMenuMiniItemWidget extends StatelessWidget {
   Widget _getChip() {
     return chipColor != null
         ? new Chip(
-            backgroundColor: chipColor,
-            label: new Text(
-              text,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style:
-                  new TextStyle(color: textColor, fontWeight: FontWeight.bold),
-            ),
-          )
+      backgroundColor: chipColor,
+      label: new Text(
+        text,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        style:
+        new TextStyle(color: textColor, fontWeight: FontWeight.bold),
+      ),
+    )
         : null;
   }
 
   Widget _getFloatingActionButton() {
     return fabColor != null
         ? new FloatingActionButton(
-            elevation: elevation,
-            mini: true,
-            backgroundColor: fabColor,
-            tooltip: tooltip,
-            child: icon,
-            heroTag: "$index",
-            onPressed: () {
-              onPressed();
-              hideWidget == null ? null : hideWidget();
-            })
+        elevation: elevation,
+        mini: true,
+        backgroundColor: fabColor,
+        tooltip: tooltip,
+        child: icon,
+        heroTag: "$index",
+        onPressed: () {
+          onPressed();
+          hideWidget == null ? null : hideWidget();
+        })
         : new FloatingActionButton(
-            elevation: elevation,
-            tooltip: tooltip,
-            mini: true,
-            child: new ConstrainedBox(
-              constraints: new BoxConstraints.expand(),
+        elevation: elevation,
+        tooltip: tooltip,
+        mini: true,
+        child: new ConstrainedBox(
+            constraints: new BoxConstraints.expand(),
+            child:
+            new ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
               child: new Container(
-                decoration: new BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: new DecorationImage(
-                    image: image,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                color: Color(0xff209286),
+                padding: EdgeInsets.all(10.0),
+                child: image,
               ),
-            ),
-            heroTag: "$index",
-            onPressed: () {
-              onPressed();
-              hideWidget == null ? null : hideWidget();
-            });
+            )
+
+        ),
+        heroTag: "$index",
+        onPressed: () {
+          onPressed();
+          hideWidget == null ? null : hideWidget();
+        });
   }
 
   @override
